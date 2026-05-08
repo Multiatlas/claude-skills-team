@@ -230,3 +230,76 @@ Si responde con la lista correcta de clientes (Tecniclima, Surdeplant, Asistehog
 - Si es problema de Claude Code, comparte la traza con él
 - Si es problema de extensión VS Code, búscala en el marketplace y revisa requisitos
 - **No avances con la siguiente fase si una anterior falla** — algo lo necesitará después
+
+---
+
+## 🌅 Helper para script morning personal: wrapper git pull con reintento OneDrive
+
+Si te haces un script morning personal (tipo `multiatlas-morning.ps1` en el Escritorio) que haga `git pull` en tus repos cada mañana, **añade este wrapper** para evitar el "OneDrive lock" intermitente.
+
+### El problema
+
+En PCs con repos git dentro de OneDrive (estructura canónica MA: `~\OneDrive\Documentos\DEVELOPER\<repo>`), `git pull` ocasionalmente falla con:
+
+```
+error: cannot open '.git/FETCH_HEAD': Permission denied
+```
+
+Esto pasa porque OneDrive bloquea el archivo durante un microsegundo mientras lo sincroniza al cloud. El error es transient — un retry pasa.
+
+### La solución
+
+Hay un helper PowerShell incluido en esta skill: [`git-pull-onedrive-retry.ps1`](git-pull-onedrive-retry.ps1).
+
+**3 reglas del wrapper**:
+1. Reintenta SOLO si es "Permission denied" + ruta `.git/`. Cualquier otro error (network, conflicto, auth) se propaga sin retry → no oculta problemas reales.
+2. Máximo 3 reintentos con `Start-Sleep 2`. Tras eso, falla normalmente.
+3. Cada reintento se loguea en cyan oscuro. Si empieza a reintentar siempre, el equipo se entera (OneDrive se ha vuelto más agresivo).
+
+### Cómo usarlo
+
+En tu script morning personal:
+
+```powershell
+# Cargar el wrapper (dot-source)
+. "$HOME\OneDrive\Documentos\DEVELOPER\claude-skills-team\skills\setup-vscode-multiatlas-team\git-pull-onedrive-retry.ps1"
+
+# Lista de tus repos
+$repos = @(
+    @{ Name = "agente-it-multiatlas"; Path = "$HOME\OneDrive\Documentos\DEVELOPER\agente-it-multiatlas"; Branch = "master" },
+    @{ Name = "multiatlas-setup-saas"; Path = "$HOME\OneDrive\Documentos\DEVELOPER\multiatlas-setup-saas"; Branch = "main" },
+    @{ Name = "claude-skills-team"; Path = "$HOME\OneDrive\Documentos\DEVELOPER\claude-skills-team"; Branch = "main" }
+    # añadir los tuyos...
+)
+
+$failed = @()
+foreach ($r in $repos) {
+    Write-Host "--- $($r.Name) ---" -ForegroundColor Yellow
+    if (-not (Test-Path $r.Path)) {
+        Write-Host "  AVISO: ruta no encontrada" -ForegroundColor DarkYellow
+        $failed += $r.Name
+        continue
+    }
+    $ok = Invoke-GitPullWithOneDriveRetry -RepoPath $r.Path -Branch $r.Branch
+    if (-not $ok) {
+        Write-Host "  ERROR: git pull falló en $($r.Name)" -ForegroundColor Red
+        $failed += $r.Name
+    }
+}
+
+if ($failed.Count -eq 0) {
+    Write-Host "`n✅ Todo sincronizado." -ForegroundColor Green
+} else {
+    Write-Host "`n⚠️ Falló: $($failed -join ', ')" -ForegroundColor DarkYellow
+}
+```
+
+### Origen y validación
+
+Diseñado por el agente IT de Desi tras detectar el problema en su PC el 2026-05-07. Validado en producción el mismo día (resolvió `programa-gestion-multiatlas` en primer reintento). Propuesto al equipo MA por Desi el 2026-05-08 e incorporado al estándar.
+
+---
+
+## ⚙️ Tooling adicional
+
+Cuando el equipo decida formalizar un script morning oficial unificado para todos, irá en este mismo directorio. Hasta entonces, el helper `git-pull-onedrive-retry.ps1` queda disponible para integrarlo a scripts personales.
