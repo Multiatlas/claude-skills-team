@@ -464,6 +464,31 @@ fetch('https://searchconsole.googleapis.com/v1/urlInspection/index:inspect', {
 });
 ```
 
+### 🧹 BLOQUE D-bis — GTM zombie cleanup (NUEVO v3, validado 9-may Tecniclima)
+
+**Síntoma**: PSI Diagnósticos muestra 2+ contenedores GTM cargando (`GTM-XXXX` + `GTM-YYYY`).
+
+**Workflow** (si MA gestiona el cliente, hacerlo nosotros):
+
+1. Buscar TODOS los IDs GTM en BD + archivos:
+```bash
+ssh <server> 'grep -rE "GTM-[A-Z0-9]+" /var/www/vhosts/<dominio>/httpdocs/wp-content/'
+```
+
+2. Buscar dónde se inyectan (típicos):
+- WPCode (`wp_posts` post_type=wpcode + option `wpcode_snippets`)
+- IHAF Insert Header and Footer (options `ihaf_insert_header` + `ihaf_insert_body`)
+- Site Kit (oficial — mantener)
+- PixelYourSite (gestor Facebook píxel — mantener si se usa Meta Ads)
+
+3. **CLAVE**: verificar que las conversiones Google Ads (`AW-XXXX`) NO están en GTMs del WP — en MA suelen estar en landings .html standalone, así que eliminar GTMs WP NO afecta a las conversiones del media buyer.
+
+4. Backup → vaciar IHAF options → cambiar status WPCode snippets a draft → **vaciar option `wpcode_snippets`** (clave: el plugin tiene cache propio, sin esto sigue inyectando) → limpiar caches.
+
+5. Verificar: home WP YA no carga los GTM eliminados, pero SÍ siguen GA4 (G-...) + Pixel Meta (/tr?id=...) + conversiones AW en landings.
+
+**Resultado típico**: ~285 KiB JS bloqueante eliminado. En Tecniclima 9-may, LCP móvil bajó de 15.3s → 12.2s (-3.1s).
+
 ### 🚀 BLOQUE D — LCP + Terceros (NUEVO v2)
 
 #### D1 — Imagen LCP: preload + fetchpriority
