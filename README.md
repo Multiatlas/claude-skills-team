@@ -1,96 +1,76 @@
-# 🛠️ Claude Skills — Equipo MultiAtlas
+# 🛠️ Claude Skills — Aporte MultiAtlas a la comunidad
 
-> **Skills compartidas del equipo MultiAtlas para Claude Code.**
-> Versionadas en este repo para que cualquier miembro del equipo (Rubén, Desi, Isaac, futuros) tenga la misma capacidad operacional en su Claude Code local.
+> **Selección curada de skills de Claude Code, publicadas por [MultiAtlas](https://multiatlas.net) como aporte a la comunidad SaaS Factory.**
+
+Estas son skills que usamos en nuestro día a día (auditorías de seguridad MCP, deploy a VPS, auth 2FA por Telegram, workflow git con anti-secret, memoria conversacional cross-surface, onboarding nuevo equipo, etc) y que hemos preparado para que cualquiera pueda usarlas con su Claude Code.
 
 ---
-
-## 🎯 Filosofía
-
-- **Una sola fuente de verdad**: este repo. Si una skill cambia, se cambia aquí, se commitea, y todos hacen `git pull` + `install.ps1`.
-- **No hay skills "personales" en este repo**: solo lo que sirve a TODO el equipo. Skills personales se quedan en `~/.claude/skills/` sin versionar.
-- **Skills versionadas**: cada cambio queda en `git log`. Si una skill rompe algo, `git revert` y todos vuelven a la versión anterior.
 
 ## 📦 Skills incluidas
 
-| Skill | Para qué |
+| Skill | Para qué sirve |
 |---|---|
-| `setup-vscode-multiatlas-team` | Onboarding técnico de un miembro nuevo: extensiones VS Code, config Claude Code, repos, hooks gitleaks |
-| `protocolo-cierre-multiatlas-team` | Protocolo estándar de cierre de sesión: git status, commit + push, memoria persistente, resumen al usuario |
-| `git-workflow-multiatlas` | Flujo Git unificado: branching, commits convencionales, tags semver, runbooks de recovery |
+| **`2fa-telegram-push-pattern`** | Patrón de segundo factor de autenticación con push de Telegram (custom, sin SaaS de terceros). Incluye TTL y auto-destrucción. |
+| **`claude-code-vps-deployment`** | Deploy de un agente Claude Code a un VPS propio, con PM2, healthcheck y logging. |
+| **`cross-surface-chat-memory`** | Memoria conversacional entre superficies (Telegram ↔ Web ↔ CLI) para que el agente recuerde sesiones previas. |
+| **`git-workflow-multiatlas`** | Flujo Git unificado: branching simple, commits convencionales, tags semver, runbooks de recovery, pre-commit gitleaks anti-secret. |
+| **`mcp-security-audit`** | Auditoría de seguridad de servidores MCP antes de instalar o actualizar. Pinning, scope mínimo, checklist comunidad. |
+| **`protocolo-blindado-anti-desastre`** | Checklist anti-desastre antes de operaciones destructivas o rotaciones críticas. Si algo puede romperse, esto te frena. |
+| **`protocolo-cierre-multiatlas-team`** | Protocolo de cierre de sesión: git status, commit + push, memoria persistente, resumen ejecutivo al usuario. |
+| **`setup-vscode-multiatlas-team`** | Onboarding técnico para un nuevo miembro: extensiones VS Code, hooks gitleaks pre-commit, config Claude Code. |
 
 ---
 
-## 🚀 Instalación inicial (cada miembro, una vez)
+## 🚀 Instalación
 
 ### Windows (PowerShell)
 
 ```powershell
-# 1. Clona este repo en tu carpeta de developer
-cd C:\Users\$env:USERNAME\OneDrive\Documentos\DEVELOPER
 git clone https://github.com/Multiatlas/claude-skills-team.git
-
-# 2. Ejecuta el instalador (copia las skills a ~/.claude/skills/)
 cd claude-skills-team
 .\install.ps1
-
-# 3. Reinicia VS Code para que Claude Code detecte las skills nuevas
 ```
 
-### Mac/Linux (bash)
+### Mac/Linux
 
 ```bash
-cd ~/Developer  # o donde tengas tus repos
 git clone https://github.com/Multiatlas/claude-skills-team.git
 cd claude-skills-team
 ./install.sh
 ```
 
-Tras la instalación, abre VS Code y pídele a tu Claude Code:
+Reinicia Claude Code (VS Code, terminal, lo que uses) tras instalar.
+
+Verifica con:
 
 ```
 Lista las skills que tienes instaladas
 ```
 
-Deberían aparecer las 3 skills del equipo + las que ya tuvieses tú.
-
 ---
 
-## 🔄 Actualizar (cuando alguien añade una skill o modifica una existente)
+## 🔄 Actualizar cuando publiquemos nuevas skills
 
 ```powershell
 # Windows
-cd C:\Users\$env:USERNAME\OneDrive\Documentos\DEVELOPER\claude-skills-team
+cd claude-skills-team
 .\update.ps1
 ```
 
 ```bash
 # Mac/Linux
-cd ~/Developer/claude-skills-team
-./update.sh
+cd claude-skills-team && ./update.sh
 ```
 
 Estos scripts hacen `git pull` y vuelven a copiar las skills a `~/.claude/skills/`.
 
-**Recomendación**: actualizar cada lunes por la mañana, así arrancas la semana con todo al día.
-
 ---
 
-## ✏️ Añadir o modificar una skill
+## ✏️ Convenciones de las skills
 
-1. **Edita o crea** la skill dentro de `skills/<nombre-skill>/SKILL.md`
-2. **Prueba en local**: ejecuta `.\install.ps1` y prueba la skill desde tu Claude Code
-3. **Commit con Conventional Commits**:
-   ```bash
-   git add skills/<nombre-skill>/
-   git commit -m "skill(<nombre>): qué cambia y por qué"
-   git push origin master
-   ```
-4. **Avisa al equipo** por WhatsApp/Telegram para que hagan `update.ps1`
+Si quieres entender cómo están construidas o adaptar alguna a tu stack:
 
-### Convenciones para nuevas skills
-
-- Nombre carpeta: `kebab-case` y descriptivo (`mantenimiento-wordpress-cliente`, no `mwc`)
+- Nombre carpeta: `kebab-case` y descriptivo
 - Frontmatter obligatorio en `SKILL.md`:
   ```markdown
   ---
@@ -98,28 +78,37 @@ Estos scripts hacen `git pull` y vuelven a copiar las skills a `~/.claude/skills
   description: Una línea — para qué sirve y cuándo invocarla. Verbos en imperativo.
   ---
   ```
-- Solo entran skills que **sirven a más de un miembro del equipo**. Skills muy personales se quedan en local.
 
 ---
 
-## 🚫 Qué NO entra en este repo
+## 🚫 Qué NO incluimos en este repo
 
-- **Skills personales** (proyecto individual, atajos de un solo dev)
-- **Skills con secretos** (API keys, tokens, paths privados) — usar memoria persistente local en su lugar
-- **Skills experimentales no probadas** — termínalas en local primero, súbelas cuando funcionen
+- **Skills con secretos** (API keys, tokens, paths privados) — los hemos limpiado todos
+- **Skills muy específicas de nuestro stack interno** que no aportarían valor genérico a la comunidad
+- **Skills experimentales no probadas** en producción
 
----
-
-## 📞 Si algo falla
-
-- **`install.ps1` no encuentra `~/.claude/skills/`**: créala manualmente con `mkdir -p ~/.claude/skills` y reintenta
-- **Una skill no aparece en Claude Code**: reinicia VS Code completamente. Si sigue sin aparecer, verifica que existe `~/.claude/skills/<nombre>/SKILL.md` con frontmatter válido
-- **Conflicto al hacer `git pull`**: alguien tocó una skill al mismo tiempo. Resuelve manualmente o pregunta al equipo
+Lo que comparte este repo son skills que **están en uso real** en nuestro día a día.
 
 ---
 
-## 🔗 Referencias cruzadas
+## 🤝 Comunidad
 
-- Manual operativo del equipo (Drive): `SAAS FACTORY/SYNC-ANTIGRAVITY/2026-05-05_de-ruben_para-desiree_manual-operativo-multiatlas-it.md`
-- Repo principal del ecosistema: `Multiatlas/agente-it-multiatlas`
-- Repo template SaaS: `Multiatlas/multiatlas-setup-saas`
+Este repo es nuestro aporte a la comunidad **SaaS Factory de Daniel Carreón**. Iremos publicando más skills curadas según las necesidades que vaya planteando la comunidad — las próximas las elegís vosotros.
+
+Si echas en falta una skill o tienes feedback:
+
+- Abre un issue en el repo
+- O coméntalo en el grupo de la comunidad SF V4
+
+---
+
+## ⚖️ Licencia
+
+Uso libre con atribución. Si publicas algo derivado de estas skills, menciona a MultiAtlas como fuente original.
+
+---
+
+## 🔗 MultiAtlas
+
+- Web: https://multiatlas.net
+- Producto interno Webs IA en 48h: https://vibe.multiatlas.net
