@@ -43,9 +43,9 @@ main ─────●──●──●──●──●──●──●─
 | `feature/<nombre>` | Trabajo > 1 día o experimental que puede romperse | Branch desde `main`, merge cuando esté verde |
 | `hotfix/<v-anterior>-<bug>` | Urgencia en producción | Branch desde el TAG (no desde `main`), merge a `main` + nuevo tag |
 
-**Repos internos solo de Rubén** (`agente-it`, `vibe`, `setup-saas`...): push directo a `main` tras commit verificado en producción. No abrir PRs vacíos.
+**Repos internos solo de la persona owner**: push directo a `main` tras commit verificado en producción. No abrir PRs vacíos.
 
-**Repos con cliente o equipo** (`asistehogar-app`, `bolsaapp`...): PR obligatorio con la plantilla.
+**Repos con cliente o equipo**: PR obligatorio con la plantilla.
 
 ---
 
@@ -72,10 +72,10 @@ ci:       cambios CI/CD
 <cuerpo opcional con el "por qué", no el "qué">
 ```
 
-Ejemplos del repo `agente-it-multiatlas`:
-- `tecniclimatizacion: catalogo climatizacion vivo en /catalogo/`
-- `auth: capa 10 (2FA push Telegram auto-destruccion) + ampliar a TODOS los logins MA`
-- `business-os: vhost app.multiatlas.es vivo en S3 + SSL Let's Encrypt`
+Ejemplos genéricos:
+- `feat(cliente-x): catalogo de servicios vivo en /catalogo/`
+- `feat(auth): 2FA push notificación auto-destrucción + ampliar a todos los logins`
+- `feat(app): vhost app.dominio.com vivo en servidor + SSL Let's Encrypt`
 
 ---
 
@@ -91,7 +91,7 @@ git tag --list 'v*' | sort -V | tail -5
 #    PATCH (v1.2.4): bugfix, sin cambios de comportamiento
 #    MINOR (v1.3.0): nueva feature compatible
 #    MAJOR (v2.0.0): cambio que rompe compatibilidad
-git tag -a v1.3.0 -m "tecniclima: catálogo climatización completo (53 series)"
+git tag -a v1.3.0 -m "cliente-x: catálogo completo (N items)"
 
 # 3. Push tag a remoto
 git push origin v1.3.0

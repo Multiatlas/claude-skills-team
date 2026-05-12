@@ -193,14 +193,14 @@ echo "🔒 BACKUP PRE-CAMBIO: $DOMINIO"
 echo "Motivo: $MENSAJE"
 
 # 1. Exportar BD (SIN tabla wp_users por seguridad)
-ssh -i /root/.ssh/id_agente_plesk root@$SERVIDOR \
+ssh -i ~/.ssh/<tu-clave-ssh> root@$SERVIDOR \
   "$PHP $WP db export /tmp/${DOMINIO}_backup.sql --exclude_tables=wp_users --path=$HTDOCS --allow-root"
 
 # 2. Descargar BD + archivos al VPS relay (SIN wp-config.php)
 mkdir -p $TEMP
-scp -i /root/.ssh/id_agente_plesk root@$SERVIDOR:/tmp/${DOMINIO}_backup.sql $TEMP/database.sql
-scp -r -i /root/.ssh/id_agente_plesk root@$SERVIDOR:$HTDOCS/wp-content/themes/ $TEMP/themes/
-scp -r -i /root/.ssh/id_agente_plesk root@$SERVIDOR:$HTDOCS/wp-content/plugins/ $TEMP/plugins/
+scp -i ~/.ssh/<tu-clave-ssh> root@$SERVIDOR:/tmp/${DOMINIO}_backup.sql $TEMP/database.sql
+scp -r -i ~/.ssh/<tu-clave-ssh> root@$SERVIDOR:$HTDOCS/wp-content/themes/ $TEMP/themes/
+scp -r -i ~/.ssh/<tu-clave-ssh> root@$SERVIDOR:$HTDOCS/wp-content/plugins/ $TEMP/plugins/
 # ⚠️ NO copiar wp-config.php — tiene credenciales de BD
 
 # 3. Push a GitHub con .gitignore de seguridad
@@ -223,15 +223,15 @@ wp-content/ai1wm-backups/
 EOF
 git add -A
 git commit -m "Pre-cambio: $MENSAJE — $(date +%Y-%m-%d\ %H:%M)"
-git remote add origin https://github.com/Multiatlas/$REPO_NAME.git
+git remote add origin https://github.com/<tu-org>/$REPO_NAME.git
 git push -u origin main --force
 
 # 4. Limpiar servidor y VPS (no dejar nada)
-ssh -i /root/.ssh/id_agente_plesk root@$SERVIDOR "rm /tmp/${DOMINIO}_backup.sql"
+ssh -i ~/.ssh/<tu-clave-ssh> root@$SERVIDOR "rm /tmp/${DOMINIO}_backup.sql"
 rm -rf $TEMP
 
 echo "✅ BACKUP SUBIDO A GITHUB (sin credenciales) — Puedes hacer los cambios"
-echo "Repo: https://github.com/Multiatlas/$REPO_NAME"
+echo "Repo: https://github.com/<tu-org>/$REPO_NAME"
 ```
 
 ---
