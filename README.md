@@ -1,8 +1,8 @@
-# 🛠️ Claude Skills — Multiatlas Pack (aporte público)
+# 🛠️ Claude Skills — Aporte MultiAtlas a la comunidad SaaS Factory
 
-> **Selección curada de skills de Claude Code publicadas como aporte a la comunidad SaaS Factory.**
+> **Skills de Claude Code publicadas por [MultiAtlas](https://multiatlas.net) como aporte oficial a la comunidad SaaS Factory de Daniel Carreón.**
 >
-> ⚠️ **Repo PÚBLICO** — léase `CLAUDE.md` antes de cualquier commit. Las skills aquí son **genéricas, sin datos sensibles, sin nombres internos**. Pensadas para que cualquier agencia, freelance o equipo SaaS pueda reutilizarlas.
+> Skills que usamos en nuestro día a día — auditorías de seguridad MCP, deploy a VPS, auth 2FA por Telegram, workflow Git con anti-secret, memoria conversacional cross-superficie, backup defensivo antes de tocar webs de cliente — sanitizadas y preparadas para que cualquier agencia, freelance o equipo SaaS pueda reutilizarlas con su Claude Code.
 
 ---
 
@@ -11,90 +11,151 @@
 - **Skills genéricas reutilizables**: cada una resuelve un problema concreto sin asumir un cliente, equipo o stack específico.
 - **Versionadas**: cada cambio queda en `git log`. Si una skill rompe algo, `git revert`.
 - **Sanitización por diseño**: todo dato sensible (emails de service accounts, IPs, nombres de clientes, paths internos) está reemplazado por placeholders genéricos (`<email>`, `<servidor>`, `<cliente>`, `<tu-clave-ssh>`).
-
-## 📦 Skills incluidas
-
-| Skill | Para qué |
-|---|---|
-| `git-workflow-multiatlas` | Flujo Git unificado: branching, commits convencionales, tags semver, runbooks de recovery, gitleaks pre-commit |
-| `mcp-security-audit` | Auditoría de seguridad de servidores MCP antes de instalar/actualizar |
-| `protocolo-blindado-anti-desastre` | Backup defensivo antes de tocar webs WP de cliente (BD + temas + plugins a GitHub) |
-| `claude-code-vps-deployment` | Patrón de deploy en VPS con Bun + PM2 + LiteSpeed |
-| `2fa-telegram-push-pattern` | 2FA push notificación con auto-destrucción del mensaje (alternativa a TOTP) |
-| `cross-surface-chat-memory` | Memoria conversacional cross-superficie via tabla `chat_messages` |
+- **Aporte público al ecosistema SaaS Factory** (Daniel Carreón). Si la comunidad propone una skill nueva, la prepararemos sanitizada y la añadimos aquí.
 
 ---
 
-## 🚀 Cómo usar estas skills
+## 📦 Skills incluidas
 
-### Opción 1 — Clonar e instalar localmente
+| Skill | Para qué sirve |
+|---|---|
+| `2fa-telegram-push-pattern` | Patrón de segundo factor de autenticación con push de Telegram (custom, sin SaaS de terceros). Incluye TTL y auto-destrucción del mensaje. |
+| `claude-code-vps-deployment` | Deploy de un agente Claude Code a un VPS propio, con PM2, healthcheck y logging. |
+| `cross-surface-chat-memory` | Memoria conversacional entre superficies (Telegram ↔ Web ↔ CLI) para que el agente recuerde sesiones previas. |
+| `git-workflow-multiatlas` | Flujo Git unificado: branching simple, commits convencionales, tags semver, runbooks de recovery, pre-commit gitleaks anti-secret. |
+| `mcp-security-audit` | Auditoría de seguridad de servidores MCP antes de instalar o actualizar. Pinning, scope mínimo, checklist de la propia comunidad SaaS Factory. |
+| `protocolo-blindado-anti-desastre` | Backup defensivo antes de operaciones destructivas o rotaciones críticas en webs de cliente. Si algo puede romperse, esto te frena y te obliga a tener red de seguridad. |
+
+---
+
+## 🧭 Cómo actuar con este repo
+
+Este repo tiene **tres tipos de audiencia**. Cada una tiene su modo de uso.
+
+### 👤 Si eres de la comunidad SaaS Factory (o llegas desde fuera)
+
+Eres bienvenido. Usa las skills como quieras: clona, copia la que te interese, adapta a tu workflow.
+
+**Opción 1 — Clonar e instalar localmente** (recomendado si vas a usar varias):
 
 ```powershell
 # Windows
-cd ~\Developer
+cd $HOME\Developer
 git clone https://github.com/Multiatlas/claude-skills-team.git
 cd claude-skills-team
-.\install.ps1   # copia las skills a ~/.claude/skills/
+.\install.ps1
 ```
 
 ```bash
-# Mac/Linux
+# Mac / Linux
 cd ~/Developer
 git clone https://github.com/Multiatlas/claude-skills-team.git
 cd claude-skills-team
 ./install.sh
 ```
 
-### Opción 2 — Copiar la skill que te interese
+Reinicia Claude Code (VS Code, terminal, lo que uses) tras instalar.
 
-Cada skill es autocontenida en `skills/<nombre>/SKILL.md`. Cópiala a tu propio repo o a `~/.claude/skills/` directamente.
+**Opción 2 — Copiar solo la skill que te interese**:
 
-### Opción 3 — Inspirarte y reescribir
+Cada skill es autocontenida en `skills/<nombre>/SKILL.md`. Cópiala a tu propio repo o directamente a `~/.claude/skills/`.
+
+**Opción 3 — Inspirarte y reescribir**:
 
 Las skills son referencias. Adáptalas a tu equipo, tu stack, tu workflow. Eso es lo bonito de los patrones — replicables, no copy/paste a ciegas.
 
+### 🤖 Si eres un agente Claude que ha abierto este repo
+
+Léete primero `CLAUDE.md` — explica qué puedes y qué NO puedes commitear aquí (es un repo PÚBLICO, las reglas son estrictas con datos sensibles).
+
+Si te han pedido contribuir aquí:
+
+1. Lee `CLAUDE.md` completo.
+2. Sanitiza tu contenido: reemplaza nombres reales por placeholders genéricos (`<cliente>`, `<dominio>`, `<email>`, `<servidor>`, `<tu-clave-ssh>`).
+3. Ejecuta el grep de auditoría que está en `CLAUDE.md`.
+4. NUNCA hagas commit sin OK explícito del owner del repo.
+
+### 🧑‍💻 Si trabajas en MultiAtlas
+
+Este repo es uno de los **3 repos del ecosistema MA**. No los confundas:
+
+| Repo | Visibilidad | Propósito |
+|---|---|---|
+| **`claude-skills-team`** (este) | PÚBLICO SaaS Factory | Skills genéricas sanitizadas. Aporte público a la comunidad |
+| `multiatlas-setup-saas` | Privado | Framework / fuente de verdad de skills + memorias + protocolos del equipo MA |
+| `agente-it-multiatlas` | Privado | Operativo del bot Telegram IT MA + fichas cliente + mu-plugins + PENDIENTES |
+
+**Skills/memorias internas del equipo MA** → `multiatlas-setup-saas`. **NUNCA aquí.**
+
+Cuando una skill privada del equipo madure y pueda compartirse con la comunidad: la sanitizas, la auditas con grep, y la mueves aquí **con OK explícito de Rubén**.
+
 ---
 
-## 🔄 Actualizar
+## 🔄 Actualizar (cuando publiquemos nuevas skills)
 
 ```powershell
 # Windows
-cd ~\Developer\claude-skills-team
+cd $HOME\Developer\claude-skills-team
 .\update.ps1
 ```
 
 ```bash
-# Mac/Linux
+# Mac / Linux
 cd ~/Developer/claude-skills-team
 ./update.sh
 ```
 
+Estos scripts hacen `git pull` y vuelven a copiar las skills a `~/.claude/skills/`.
+
 ---
 
-## ✏️ Contribuir (si trabajas en Multiatlas)
+## ✏️ Convenciones de las skills
 
-Este repo es para aporte público. **Nunca commitees** aquí:
+Si quieres entender cómo están construidas o adaptar alguna a tu stack:
 
-- Service Account emails / project IDs
-- IPs / hosts / paths internos
-- Nombres de clientes reales
-- Nombres del equipo interno
-- Credenciales / tokens / customer IDs
+- Nombre de carpeta: `kebab-case` y descriptivo (`protocolo-blindado-anti-desastre`, no `pbad`)
+- Frontmatter obligatorio en `SKILL.md`:
 
-Si necesitas commitear una skill que tiene referencias internas, **sanitízala primero**: reemplaza con genéricos (`<email>`, `<cliente>`, `<servidor>`). Léase `CLAUDE.md` para el protocolo completo.
+```markdown
+---
+name: Nombre Legible
+description: Una línea — para qué sirve y cuándo invocarla. Verbos en imperativo.
+---
+```
+
+---
+
+## 🚫 Qué NO incluimos en este repo
+
+- **Skills con secretos** (API keys, tokens, paths privados) — los hemos limpiado todos.
+- **Skills muy específicas de nuestro stack interno** que no aportarían valor genérico a la comunidad — se quedan en nuestros repos privados.
+- **Skills experimentales no probadas** en producción — terminamos en local primero.
+
+Lo que comparte este repo son skills que **están en uso real** en nuestro día a día con clientes.
 
 ---
 
 ## 🤝 Comunidad SaaS Factory
 
-Este repo es aporte a la comunidad **SaaS Factory** (Daniel Carreón). Si encuentras estas skills útiles:
+Este repo es nuestro aporte a la comunidad **SaaS Factory de Daniel Carreón**. Iremos publicando más skills curadas según las necesidades que vaya planteando la comunidad — las próximas las elegís vosotros.
 
-- Adáptalas a tu workflow.
-- Comparte mejoras (PRs bienvenidos).
-- Cita la fuente si republicas.
+Si echas en falta una skill o tienes feedback:
+
+- Abre un **issue** en este repo.
+- Coméntalo en el grupo de la comunidad SF V4.
+
+PRs bienvenidos (sanitizados, sin datos sensibles, con frontmatter correcto).
 
 ---
 
-## 📞 Licencia
+## ⚖️ Licencia
 
-MIT — usa, modifica, redistribuye. Sin garantías.
+Uso libre con atribución. Si publicas algo derivado de estas skills, menciona a [MultiAtlas](https://multiatlas.net) como fuente original.
+
+---
+
+## 🔗 MultiAtlas
+
+- **Web**: https://multiatlas.net
+- **Producto interno Webs IA en 48h**: https://vibe.multiatlas.net
+- **Comunidad SaaS Factory**: [enlace al grupo / canal de Daniel Carreón]
