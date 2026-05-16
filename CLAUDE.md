@@ -96,12 +96,11 @@ Las únicas excepciones permitidas son las menciones dentro de este `CLAUDE.md` 
 
 ---
 
-## 📚 Repos relacionados del ecosistema MultiAtlas
+## 📚 Alcance de este repo
 
-- **`Multiatlas/agente-it-multiatlas`** (privado) — operativo bot Telegram + clientes
-- **`Multiatlas/multiatlas-setup-saas`** (privado) — framework SaaS + skills/memorias equipo
+Este repo es **público** y contiene únicamente skills sanitizadas para la comunidad. Los repos internos del equipo MA (operativo + framework) viven aparte como **privados** y no se mencionan aquí por nombre.
 
-Si trabajas en este repo público, **trabajas únicamente con su contenido**. No mezcles con los privados. Si necesitas algo de los privados, ábrelos por separado en otro VS Code o workspace distinto.
+Si trabajas en este repo público, **trabajas únicamente con su contenido**. Si necesitas tocar algo interno, ábrelo en otro VS Code o workspace distinto.
 
 ---
 

@@ -77,17 +77,9 @@ Si te han pedido contribuir aquí:
 
 ### 🧑‍💻 Si trabajas en MultiAtlas
 
-Este repo es uno de los **3 repos del ecosistema MA**. No los confundas:
+Este repo es la **vitrina pública** del equipo MA en la comunidad SaaS Factory. Las skills/memorias internas viven en **repos privados separados**, no aquí.
 
-| Repo | Visibilidad | Propósito |
-|---|---|---|
-| **`claude-skills-team`** (este) | PÚBLICO SaaS Factory | Skills genéricas sanitizadas. Aporte público a la comunidad |
-| `multiatlas-setup-saas` | Privado | Framework / fuente de verdad de skills + memorias + protocolos del equipo MA |
-| `agente-it-multiatlas` | Privado | Operativo del bot Telegram IT MA + fichas cliente + mu-plugins + PENDIENTES |
-
-**Skills/memorias internas del equipo MA** → `multiatlas-setup-saas`. **NUNCA aquí.**
-
-Cuando una skill privada del equipo madure y pueda compartirse con la comunidad: la sanitizas, la auditas con grep, y la mueves aquí **con OK explícito de Rubén**.
+Cuando una skill interna madure y pueda compartirse con la comunidad: la sanitizas, la auditas con grep, y la mueves aquí **con OK explícito del owner**.
 
 ---
 
@@ -157,5 +149,4 @@ Uso libre con atribución. Si publicas algo derivado de estas skills, menciona a
 ## 🔗 MultiAtlas
 
 - **Web**: https://multiatlas.net
-- **Producto interno Webs IA en 48h**: https://vibe.multiatlas.net
 - **Comunidad SaaS Factory**: [enlace al grupo / canal de Daniel Carreón]
