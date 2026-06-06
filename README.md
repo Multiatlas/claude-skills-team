@@ -25,6 +25,8 @@
 | `git-workflow-multiatlas` | Flujo Git unificado: branching simple, commits convencionales, tags semver, runbooks de recovery, pre-commit gitleaks anti-secret. |
 | `mcp-security-audit` | Auditoría de seguridad de servidores MCP antes de instalar o actualizar. Pinning, scope mínimo, checklist de la propia comunidad SaaS Factory. |
 | `protocolo-blindado-anti-desastre` | Backup defensivo antes de operaciones destructivas o rotaciones críticas en webs de cliente. Si algo puede romperse, esto te frena y te obliga a tener red de seguridad. |
+| `supabase-rls-escrituras-admin-service-role` | **El bug fantasma de Supabase**: tu panel admin dice "guardado ✅" y no guarda nada. Escrituras admin con la clave ANON + RLS → 0 filas, sin error, `success:true`. Regla service_role tras verifyAdmin + guard anti-silencio + grep para CI. |
+| `handoff-continuidad-sesion` | **Caja negra para tu agente**: que un fallo de API o una compactación de contexto no te borre horas de trabajo. HANDOFF vivo en git, actualizado cada hora; si la sesión muere, un chat nuevo lo lee y retoma en 30 segundos. |
 
 ---
 
