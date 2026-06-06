@@ -2,7 +2,7 @@
 
 > **Skills de Claude Code publicadas por [MultiAtlas](https://multiatlas.net) como aporte oficial a la comunidad SaaS Factory de Daniel Carreón.**
 >
-> Skills que usamos en nuestro día a día — auditorías de seguridad MCP, deploy a VPS, auth 2FA por Telegram, workflow Git con anti-secret, memoria conversacional cross-superficie, backup defensivo antes de tocar webs de cliente — sanitizadas y preparadas para que cualquier agencia, freelance o equipo SaaS pueda reutilizarlas con su Claude Code.
+> Skills de Claude Code que usamos en producción, **curadas y sanitizadas una a una** para que cualquier agencia, freelance o equipo SaaS pueda reutilizarlas. Publicamos **por lotes**: cada semana añadimos la(s) que de verdad aportan valor genérico, sin datos sensibles. Empezamos limpio — esto es lo que hay hoy y va creciendo con cuidado.
 
 ---
 
@@ -19,14 +19,9 @@
 
 | Skill | Para qué sirve |
 |---|---|
-| `2fa-telegram-push-pattern` | Patrón de segundo factor de autenticación con push de Telegram (custom, sin SaaS de terceros). Incluye TTL y auto-destrucción del mensaje. |
-| `claude-code-vps-deployment` | Deploy de un agente Claude Code a un VPS propio, con PM2, healthcheck y logging. |
-| `cross-surface-chat-memory` | Memoria conversacional entre superficies (Telegram ↔ Web ↔ CLI) para que el agente recuerde sesiones previas. |
-| `git-workflow-multiatlas` | Flujo Git unificado: branching simple, commits convencionales, tags semver, runbooks de recovery, pre-commit gitleaks anti-secret. |
-| `mcp-security-audit` | Auditoría de seguridad de servidores MCP antes de instalar o actualizar. Pinning, scope mínimo, checklist de la propia comunidad SaaS Factory. |
-| `protocolo-blindado-anti-desastre` | Backup defensivo antes de operaciones destructivas o rotaciones críticas en webs de cliente. Si algo puede romperse, esto te frena y te obliga a tener red de seguridad. |
-| `supabase-rls-escrituras-admin-service-role` | **El bug fantasma de Supabase**: tu panel admin dice "guardado ✅" y no guarda nada. Escrituras admin con la clave ANON + RLS → 0 filas, sin error, `success:true`. Regla service_role tras verifyAdmin + guard anti-silencio + grep para CI. |
-| `handoff-continuidad-sesion` | **Caja negra para tu agente**: que un fallo de API o una compactación de contexto no te borre horas de trabajo. HANDOFF vivo en git, actualizado cada hora; si la sesión muere, un chat nuevo lo lee y retoma en 30 segundos. |
+| `handoff-continuidad-sesion` | **Caja negra para tu agente**: que un fallo de API o una compactación de contexto no te borre horas de trabajo. Mantiene un HANDOFF vivo en git (actualizado cada hora y tras cada hito); si la sesión muere, abres un chat nuevo, lo lee y retomas donde estabas en 30 segundos. |
+
+> 🆕 Iremos publicando **más skills cada semana**, curadas y sanitizadas una a una. Esta es la primera del nuevo ciclo.
 
 ---
 
@@ -107,7 +102,7 @@ Estos scripts hacen `git pull` y vuelven a copiar las skills a `~/.claude/skills
 
 Si quieres entender cómo están construidas o adaptar alguna a tu stack:
 
-- Nombre de carpeta: `kebab-case` y descriptivo (`protocolo-blindado-anti-desastre`, no `pbad`)
+- Nombre de carpeta: `kebab-case` y descriptivo (`handoff-continuidad-sesion`, no `hcs`)
 - Frontmatter obligatorio en `SKILL.md`:
 
 ```markdown
