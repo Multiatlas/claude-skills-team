@@ -14,7 +14,7 @@ Write-Host ""
 Write-Host "[1/2] git pull..." -ForegroundColor Cyan
 Push-Location $PSScriptRoot
 try {
-    git pull origin master
+    git pull origin main
     if ($LASTEXITCODE -ne 0) {
         Write-Host "ERROR: git pull fallo. Revisa conflictos o conexion." -ForegroundColor Red
         exit 1

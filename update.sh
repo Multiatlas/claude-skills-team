@@ -12,7 +12,7 @@ echo ""
 
 echo "[1/2] git pull..."
 cd "$SCRIPT_DIR"
-git pull origin master
+git pull origin main
 
 echo ""
 echo "[2/2] Reinstalando skills..."
