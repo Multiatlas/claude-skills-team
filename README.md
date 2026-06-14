@@ -20,8 +20,11 @@
 | Skill | Para qué sirve |
 |---|---|
 | `handoff-continuidad-sesion` | **Caja negra para tu agente**: que un fallo de API o una compactación de contexto no te borre horas de trabajo. Mantiene un HANDOFF vivo en git (actualizado cada hora y tras cada hito); si la sesión muere, abres un chat nuevo, lo lee y retomas donde estabas en 30 segundos. |
+| `mcp-security-audit` | **Auditoría de un servidor MCP ANTES de instalarlo o actualizarlo**: permisos, código y supply-chain. Para que no metas un MCP malicioso (o una versión envenenada) dentro de tu agente. Pin exacto de versiones, nunca `^`. |
+| `protocolo-blindado-anti-desastre` | **Backup obligatorio a git ANTES de que un agente toque la web o infra de un cliente.** Nació de un marrón real: un agente rompió una web sin backup previo. Si algo peta, `git revert` y vuelves a producción en segundos. |
+| `deploy-quirurgico-next-vps` | **Deploy sin Vercel.** Sube cambios a tu Next.js self-hosted (PM2 + VPS) subiendo **solo el artefacto que cambió** (KB, no los ~90 MB del build): `md5` de invariantes + `scp` quirúrgico + swap atómico + rollback en segundos. Coste fijo, control total, cero lock-in. |
 
-> 🆕 Iremos publicando **más skills cada semana**, curadas y sanitizadas una a una. Esta es la primera del nuevo ciclo.
+> 🆕 Publicamos **más skills cada semana**, curadas y sanitizadas una a una. Las próximas las elegís vosotros (votad en la comunidad).
 
 ---
 
