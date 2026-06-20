@@ -24,6 +24,7 @@
 | `protocolo-blindado-anti-desastre` | **Backup obligatorio a git ANTES de que un agente toque la web o infra de un cliente.** Nació de un marrón real: un agente rompió una web sin backup previo. Si algo peta, `git revert` y vuelves a producción en segundos. |
 | `deploy-quirurgico-next-vps` | **Deploy sin Vercel.** Sube cambios a tu Next.js self-hosted (PM2 + VPS) subiendo **solo el artefacto que cambió** (KB, no los ~90 MB del build): `md5` de invariantes + `scp` quirúrgico + swap atómico + rollback en segundos. Coste fijo, control total, cero lock-in. |
 | `meta-capi-server-side` | **Meta Ads sin perder leads.** Conversions API server-side con deduplicación por `event_id`: recupera el **30-50% de conversiones** que el píxel pierde por iOS/ATT y ad-blockers → mejor atribución → **CPL 15-25% más bajo**. Helper completo, dedup cliente↔server, GDPR, y cómo generar el token (con sus 2 trampas que dejan el botón en gris). |
+| `2fa-telegram-push-pattern` | **2FA gratis sin SMS ni Twilio.** Aprobación de login por push de Telegram con botones ✅/❌. El mensaje es genérico (sin email/IP/dominio) y **se auto-destruye en 30s** → si te roban el móvil desbloqueado, el chat no revela nada. Incluye el esquema Supabase, el endpoint Next.js, el handler del bot, el comando `/quiet`, los tests de aceptación y la trampa del **límite de 64 bytes en `callback_data`** que rompe el botón en silencio. |
 
 > 🆕 Publicamos **más skills cada semana**, curadas y sanitizadas una a una. Las próximas las elegís vosotros (votad en la comunidad).
 
